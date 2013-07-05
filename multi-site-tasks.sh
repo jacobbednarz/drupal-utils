@@ -7,8 +7,14 @@
 #
 # Author: Jacob Bednarz <jacob_bednarz@flightcentre.com>
 
+# Find the docroot
+echo "What is the full path to the docroot?"
+read docroot_path
+
+cd $docroot_path
+
 # Get all Drupal sites
-sites=`find ../docroot/sites -maxdepth 1 -type d -print | grep -v '/all$' | grep -v '/default$' | grep -v '\.$'`
+sites=`find sites/ -maxdepth 1 -type d -print | grep -v '/all$' | grep -v '/default$' | grep -v '\.$'`
 
 echo "Choose the commande to execute : "
 echo "[ 1 ] Run DB updates"
@@ -30,9 +36,9 @@ fi
 # For each site, execute the command
 for site in $sites
 do
-  echo ----------
-  echo $site
-  cd $site
+  echo "---"
+  echo $docroot_path/$site
+  cd $docroot_path/$site
   if [ $choice -eq 1 ] ; then
     drush updatedb
   elif [ $choice -eq 2 ] ; then
@@ -40,7 +46,7 @@ do
   elif [ $choice -eq 3 ] ; then
     drush vset --always-set maintenance_mode 0
   elif [ $choice -eq 4 ] ; then
-    drush cc all
+    drush cc all 
   elif [ $choice -eq 5 ] ; then
     drush cc css+js
   elif [ $choice -eq 6 ] ; then
@@ -48,9 +54,8 @@ do
   elif [ $choice -eq 7 ] ; then
     drush pm-enable -y $ext
   elif [ $choice -eq 8 ] ; then
-    drush pm-disable -y $ext  
+    drush pm-disable -y $ext
   elif [ $choice -eq 9 ] ; then
     drush pm-list | grep "$ext"
   fi
-  cd ../
 done
