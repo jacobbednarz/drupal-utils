@@ -5,7 +5,7 @@
 # Usage:
 #   ./multiple-site-tasks.sh
 #
-# Author: Jacob Bednarz <jacob_bednarz@flightcentre.com>
+# Author: Jacob Bednarz <jacob.bednarz@gmail.com>
 
 # Find the docroot
 echo "What is the full path to the docroot?"
